@@ -1,7 +1,9 @@
 import os
+import shutil
 import cv2
 
 pathOrigin = '/Users/alanvictor/Desktop/FotosInstaIBNA'
+pathDestiny = '/Users/alanvictor/Desktop/FotosInstaIBNASEDE'
 
 
 files = []
@@ -12,4 +14,14 @@ for r, d, f in os.walk(pathOrigin):
             files.append(os.path.join(r, file))
 
 for f in files:
-    print(f)
+    image = cv2.imread(f)
+    h, w, c = image.shape
+    nameFolder = str(w) + ' x ' + str(h)
+    dirName = os.path.join(pathDestiny, nameFolder)
+    if not os.path.exists(dirName):
+        os.mkdir(dirName)
+        print("Directory ", dirName, " Created ")
+        shutil.move(f, dirName)
+    else:
+        print("Directory ", dirName, " already exists")
+        shutil.move(f, dirName)
